@@ -19,7 +19,7 @@ con.connect(function(err) {
   console.log("Connected!");
 
   let sql =
-    "DROP TABLE if EXISTS `game_collection`;CREATE TABLE `game_collection`(`gameId` INT UNSIGNED NOT NULL AUTO_INCREMENT,`status` CHAR(255) NOT NULL, PRIMARY KEY (gameId));";
+    "DROP TABLE if EXISTS `game_collection`;CREATE TABLE `game_collection`(`gameId` INT UNSIGNED NOT NULL AUTO_INCREMENT,`gameName` CHAR(255) NOT NULL,`myRating` CHAR(255) NOT NULL,`dateAdded` CHAR(255) NOT NULL,`status` CHAR(255) NOT NULL,`api_id` CHAR(255) NOT NULL, `gameImg` CHAR(255) NOT NULL, PRIMARY KEY (gameId));";
     
   con.query(sql, function(err, result) {
     if (err) throw err;

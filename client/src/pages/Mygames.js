@@ -1,32 +1,78 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
 export default function Mygames() {
+  const [myList, setMyList] = useState([]);
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  useEffect(() => {
+    viewList();
+  }, []);
+
+  const viewList = async () => {
+    const response = await fetch("/mygames");
+    const list = await response.json();
+    // console.log(list);
+    setMyList(list);
+  };
+
   return (
-    <div>
-      <div>
-      <h1>My games</h1>
+    <div className="container">
+      <div className="mt-4">
+        <h1 className="mb-4 mt-4">My games</h1>
+
+        {myList && (
+          <div key={myList.gameId} className="d-flex flex-wrap row">
+            {myList.map((gameElement, index) => (
+              <div className="col-4 card" key={index}>
+                <div className="card-body" key={index}>
+                  <img
+                    height="220"
+                    className="card-img-top mb-2"
+                    src={gameElement.gameImg}
+                  />
+                  <div className="card-title" key={index}>
+                    <h3 key={gameElement.gameName}>{gameElement.gameName}</h3>
+                </div>
+
+                <div className="d-flex justify-content-between">
+                    <div>
+                    <span className="badge bg-success me-1">
+                      Rating: {gameElement.myRating}
+                    </span>
+                    <span key={gameElement.status} className="badge bg-success">
+                      {gameElement.status}
+                    </span>
+                  </div>
+                  <div>
+                    <button>
+                      Edit <i className="fa-solid fa-pen-to-square"></i>
+                    </button>
+                  
+                  </div>
+
+              </div>
+
+                </div>
+              </div>
+            ))}
+          </div>
+
+          
+        )}
+      </div>
+
+
+
+
+
+
+
       
-      <h2>No man's sky</h2>
-      <p>My Rating: 4/5</p>
-      <p>Status: </p>
-      <p>View Game Info</p>
-      <p></p>
-      <div>
-        <p>Carousel</p>
-        <img src="https://static-cdn.jtvnw.net/ttv-boxart/458781_IGDB-144x192.jpg"/>
-        <img src="https://static-cdn.jtvnw.net/ttv-boxart/458781_IGDB-144x192.jpg"/>
-        <img src="https://static-cdn.jtvnw.net/ttv-boxart/458781_IGDB-144x192.jpg"/>
-        <img src="https://static-cdn.jtvnw.net/ttv-boxart/458781_IGDB-144x192.jpg"/>
-      </div>
-
-      <div>
-        <img src="https://static-cdn.jtvnw.net/ttv-boxart/458781_IGDB-144x192.jpg"/>
-        <img src="https://static-cdn.jtvnw.net/ttv-boxart/458781_IGDB-144x192.jpg"/>
-        <img src="https://static-cdn.jtvnw.net/ttv-boxart/458781_IGDB-144x192.jpg"/>
-        <img src="https://static-cdn.jtvnw.net/ttv-boxart/458781_IGDB-144x192.jpg"/>
-
-      </div>
-      </div>
     </div>
-  )
+  );
 }
