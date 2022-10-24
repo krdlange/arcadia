@@ -137,8 +137,7 @@ export default function Search() {
 
                 <div className="d-flex mt-4 justify-content-end"> 
                 <div className="mb-2 me-2">
-                  {/* https://stackoverflow.com/questions/71997125/react-modal-returns-last-value-of-mapped-data */}
-                  {/* appsloveworld.com/reactjs/200/346/how-do-i-use-react-modal-with-a-map-function */}
+                
 
                 {/* HANDLE THE GAME BY OPENING MODAL - COPY DATA TO MODAL */}
                   <button

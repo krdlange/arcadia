@@ -66,14 +66,14 @@ export default function Gameprofile() {
 
         <div>
           <h1>{game.name}</h1>
-          <span>Release date: {game.released}</span>
+          <div><h5>Release date: {game.released}</h5></div>
           {game.genres && (
             <div>
               {game.genres.map((genres) => {
                 return (
-                  <div key={genres.id}>
+                  <h5 key={genres.id}>
                     <span className="badge bg-secondary">{genres.name}</span>
-                  </div>
+                  </h5>
                 );
               })}
             </div>
@@ -96,41 +96,41 @@ export default function Gameprofile() {
         <div className="row">
           <div className="card col-8 me-3">
             <div className="card-body">
-              <h5 className="card-title">Description</h5>
-              <p className="card-text">{game.description_raw}</p>
+              <h5 className="card-title mb-1 mt-2">Description</h5>
+              <p className="card-text mb-4">{game.description_raw}</p>
 
               <h5 className="card-title">Developers </h5>
-              <div className="card-text">
+              <div className="card-text mb-4">
                 {game.developers && (
                   <div>
                     {game.developers.map((developers) => {
                       return (
-                        <div key={developers.name}>
+                        <h5 key={developers.name}>
                           <span className="badge bg-secondary">
                             {developers.name}
                           </span>
-                        </div>
+                        </h5>
                       );
                     })}
                   </div>
                 )}
               </div>
 
-              <h5 className="card-title">Stores </h5>
-              <div className="card-text">
+              <h5 className="card-title mb-1">Stores </h5>
+              <div className="card-text mb-4">
                 {game.stores && (
-                  <span>
+                  <div>
                     {game.stores.map((stores) => {
                       return (
                         <a href={`http://www.${stores.store.domain}`}target="_blank">
-                        <span className="me-2" key={stores.store.name}>
-                          <h5 className="badge bg-secondary">
+                        <h5 key={stores.store.name}>
+                          <span className="badge bg-secondary me-2">
                             {stores.store.name}
-                          </h5>
-                        </span></a>
+                          </span>
+                        </h5></a>
                       );
                     })}
-                  </span>
+                  </div>
                 )}
               </div>
             </div>
@@ -140,11 +140,11 @@ export default function Gameprofile() {
 
           <div className="card col-3">
             <div className="card-body">
-              <h5 className="card-title">Metacritic rating </h5>
-              <p className="card-text">{game.rating}</p>
+              <h5 className="card-title mb-1 mt-2">Metacritic rating </h5>
+              <h2 className="card-text mb-4">{game.rating}</h2>
 
-              <h5 className="card-title">Platforms </h5>
-              <div className="card-text">
+              <h5 className="card-title mb-1">Platforms </h5>
+              <div className="card-text mb-4">
                 {game.platforms && (
                   <div>
                     {game.platforms.map((platforms) => {
@@ -161,8 +161,8 @@ export default function Gameprofile() {
               </div>
 
 
-              <h5 className="card-title">ESRB Rating </h5>
-              <div className="card-text">
+              <h5 className="card-title mb-1">ESRB Rating </h5>
+              <div className="card-text mb-4">
                 {game.esrb_rating && (
                   <div>
                     {Object.keys(game.esrb_rating).map((key, index) => {
