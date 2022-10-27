@@ -5,18 +5,23 @@ const API_KEY = process.env.REACT_APP_API_KEY;
 const BASE_URL = "https://api.rawg.io/api/games";
 
 export default function Gameprofile() {
-  const [game, setGame] = useState([]); //fetch game info
+  const [game, setGame] = useState([]); //to store fetch response game info
   const { id } = useParams(); //store id from search page
   const [gameStatus, setGameStatus] = useState({
     gameId: `${id}`,
     status: "",
   });
 
+  //call fetchGame after render
   useEffect(() => {
-    //1 - fetch game info & setData to show
     fetchGame();
   }, []);
 
+  // useEffect(() => {
+  //   postStatus();
+  // }, [setGameStatus])
+
+  //store fetch response to setGame
   const fetchGame = async () => {
     const response = await fetch(`${BASE_URL}/${id}?key=${API_KEY}`, {
       method: "GET",
@@ -26,12 +31,15 @@ export default function Gameprofile() {
     setGame(gameInfo);
   };
 
-  // 2- on click store info into gameStatus & call addGame to post gameStatus variables into the database
+  //1 - check if id is already in database, if it exists, display that status if not show default value (?)
+  //2 - on change of dropdown selection - store each event to gameStatus
+  //3 - call a router.post function if selection is made
+  //4 - call a router.put function if it already exists
+  //5 - call a router.delete if user selects default option
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    //first write a route to put the change - put game
-    //res
+    //
 
     setGameStatus((prevState) => ({
       ...prevState,
@@ -39,9 +47,8 @@ export default function Gameprofile() {
     }));
   };
 
-  console.log(gameStatus);
 
-  //  3- post on database
+  //router.post to database
   const addGame = async () => {
     const response = await fetch("/mygames", {
       method: "POST",
@@ -52,10 +59,9 @@ export default function Gameprofile() {
     });
     const json = await response.json();
     console.log(json);
-    setGameStatus(json); //set status of game content
+    setGameStatus(json);
   };
 
-  //4 - make sure to keep the gameStatus on different routes
 
   return (
     <div>
@@ -85,9 +91,9 @@ export default function Gameprofile() {
               onChange={(e) => handleChange(e)}
             >
               <option selected>Add to collection</option>
-              <option value="isComplete">Done</option>
-              <option value="toPlay">To Play</option>
-              <option value="currentlyPlaying">Currently Playing</option>
+              <option value="Done Playing">Done</option>
+              <option value="To Play">To Play</option>
+              <option value="Currently playing">Currently Playing</option>
             </select>
           </div>
         </div>
