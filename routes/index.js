@@ -19,9 +19,9 @@ router.get("/mygames", (req, res) => {
 //Post a game
 router.post("/mygames", async function (req, res) {
   //declare body
-  const { gameName, myRating, dateAdded, status, api_id, gameImg } = req.body;
+  const { game_id, game_name, my_rating, api_id, user_id } = req.body;
   //declare sql
-  const sql = `INSERT INTO game_collection (gameName, myRating, dateAdded, status, api_id, gameImg) VALUES ('${gameName}', '${myRating}', '${dateAdded}','${status}','${api_id}', '${gameImg}' )`;
+  const sql = `INSERT INTO game_collection (game_id, game_name, my_rating, api_id, user_id) VALUES ('${game_id}', '${game_name}', '${my_rating}','${api_id}','${user_id}')`;
 
   try {
     await db(sql);
