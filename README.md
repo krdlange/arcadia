@@ -12,19 +12,19 @@ A platform for gamers to view game information and to keep track of their gaming
 ### Database Prep
 
 * Access the MySQL interface in your terminal by running mysql -u root -p
-* Create a new database called game_collection: create database game_collection
+* Create a new database called arcadia
 * Add a .env file to the project folder of this repository containing the MySQL authentication information for MySQL user. For example:
 
 ```
   DB_HOST=localhost
   DB_USER=root
-  DB_NAME=game_collection
+  DB_NAME=arcadia
   DB_PASS=YOURPASSWORD
 ```
 
-Run npm run migrate in the project folder of this repository, in a new terminal window. This will create a table called 'game_collection' in your database.
+Run npm run migrate in the project folder of this repository, in a new terminal window. This will create a table called 'arcadia' in your database.
 
-In your MySQL console, you can run use game_collection; and then describe game_collection; to see the structure of the game_collection table.
+In your MySQL console, you can run use arcadia; and then describe arcadia; to see the structure of the game_collection & users table.
 
 ### API you'll need
 
