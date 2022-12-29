@@ -1,6 +1,5 @@
 import "./App.css";
 import { Routes, Route, Link } from "react-router-dom";
-import React, { useState } from "react";
 import Mygames from "./pages/Mygames";
 import Gameprofile from "./pages/Gameprofile";
 import Search from "./pages/Search";

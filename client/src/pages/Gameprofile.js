@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 const BASE_URL = "https://api.rawg.io/api/games";
@@ -7,17 +9,20 @@ const BASE_URL = "https://api.rawg.io/api/games";
 export default function Gameprofile() {
   const [game, setGame] = useState([]); //show game profile
   const { id } = useParams(); //api id
-  // const [gameStatus, setGameStatus] = useState({
-  //   gameId: `${id}`,
-  //   status: "",
-  // });
-  const [saveGame, setSaveGame] = useState({
-    game_id: `${id}`,
-    game_name: "",
-    my_rating: "",
-    api_id: "",
-    user_id: ""
-  })
+
+  //modal
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  //add to db
+  const [saveGame, setSaveGame] = useState ({
+    id: "",
+    api_id: `${id}`,
+    user_id: "",
+    status: "",
+    my_rating: ""
+  });
 
   //call fetchGame after render
   useEffect(() => {
@@ -34,8 +39,10 @@ export default function Gameprofile() {
     setGame(gameInfo);
   };
 
-
-
+  //add game to my collection
+  const addGameToCollection = async () => {
+    const response = await fetch("/")
+  }
   return (
     <div>
       <div className="container d-flex  mt-4">
@@ -45,7 +52,9 @@ export default function Gameprofile() {
 
         <div>
           <h1>{game.name}</h1>
-          <div><h5>Release date: {game.released}</h5></div>
+          <div>
+            <h5>Release date: {game.released}</h5>
+          </div>
           {game.genres && (
             <div>
               {game.genres.map((genres) => {
@@ -57,20 +66,57 @@ export default function Gameprofile() {
               })}
             </div>
           )}
+
           <div className="mt-4">
-            <select
-              name="status"
-              className="form-select"
-              // onChange={(e) => handleChange(e)}
-            >
-              <option selected>Add to collection</option>
-              <option value="To Play">To play</option>
-              <option value="Currently playing">Currently Playing</option>
-              <option value="Done Playing">Done Playing</option>
-            </select>
+            <Button variant="primary" onClick={handleShow}>
+              Add to collection
+            </Button>
 
-
-
+            <Modal show={show} onHide={handleClose}>
+              <Modal.Header closeButton>
+                <Modal.Title>
+                  Add {game.name} to your game collection
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <h5>Set your game status</h5>
+                <p>
+                  <select
+                    name="status"
+                    className="form-select"
+                    // onChange={(e) => handleChange(e)}
+                  >
+                    <option selected>Choose game status...</option>
+                    <option value="To Play">To play</option>
+                    <option value="Currently playing">Currently Playing</option>
+                    <option value="Done Playing">Done Playing</option>
+                  </select>
+                </p>
+                <h5>Set your rating</h5>
+                <p>
+                  <select
+                    name="rating"
+                    className="form-select"
+                    // onChange={(e) => handleChange(e)}
+                  >
+                    <option selected>Choose your rating...</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </select>
+                </p>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                  Close
+                </Button>
+                <Button variant="primary" onClick={handleClose}>
+                  Save Game
+                </Button>
+              </Modal.Footer>
+            </Modal>
           </div>
         </div>
       </div>
@@ -104,12 +150,19 @@ export default function Gameprofile() {
                   <div>
                     {game.stores.map((stores) => {
                       return (
-                        <a href={`http://www.${stores.store.domain}`}target="_blank">
-                        <h5 key={stores.store.name}>
-                          <span className="badge bg-secondary me-2">
-                            {stores.store.name}
-                          </span>
-                        </h5></a>
+                        <a
+                          href={`http://www.${stores.store.domain}`}
+                          target="_blank"
+                        >
+                          <h5 key={stores.store.name}>
+                            <span
+                              key={stores.store.id}
+                              className="badge bg-secondary me-2"
+                            >
+                              {stores.store.name}
+                            </span>
+                          </h5>
+                        </a>
                       );
                     })}
                   </div>
@@ -117,8 +170,6 @@ export default function Gameprofile() {
               </div>
             </div>
           </div>
-
-          
 
           <div className="card col-3">
             <div className="card-body">
@@ -142,7 +193,6 @@ export default function Gameprofile() {
                 )}
               </div>
 
-
               <h5 className="card-title mb-1">ESRB Rating </h5>
               <div className="card-text mb-4">
                 {game.esrb_rating && (
@@ -157,8 +207,6 @@ export default function Gameprofile() {
                   </div>
                 )}
               </div>
-
-
             </div>
           </div>
         </div>

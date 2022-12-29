@@ -4,8 +4,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+
 var indexRouter = require('./routes');
 var usersRouter = require('./routes/users');
+var gamecollectionRouter = require('./routes/gamecollection')
 
 var app = express();
 
@@ -17,8 +19,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/gamecollection', gamecollectionRouter);
 
 // catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  next(createError(404));
+});
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname + "/client/build/index.html"));
+});
+
 app.use(function(req, res, next) {
   next(createError(404));
 });
