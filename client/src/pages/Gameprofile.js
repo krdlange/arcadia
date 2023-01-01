@@ -9,6 +9,8 @@ const BASE_URL = "https://api.rawg.io/api/games";
 export default function Gameprofile() {
   const [game, setGame] = useState([]); //show game profile
   const { id } = useParams(); //api id
+  const [title, setTitle] = useState();
+  const [image, setImage] = useState();
 
   //modal
   const [show, setShow] = useState(false);
@@ -16,8 +18,7 @@ export default function Gameprofile() {
   const handleShow = () => setShow(true);
 
   //add to db
-  const [saveGame, setSaveGame] = useState ({
-    id: "",
+  const [input, setInput] = useState ({
     api_id: `${id}`,
     user_id: "",
     status: "",
@@ -37,12 +38,42 @@ export default function Gameprofile() {
     const gameInfo = await response.json();
     console.log(gameInfo);
     setGame(gameInfo);
+    setTitle(gameInfo.name);
+    setImage(gameInfo.background_image);
   };
 
   //add game to my collection
   const addGameToCollection = async () => {
-    const response = await fetch("/")
+    const response = await fetch("/gamecollection", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        api_id: `${id}`,
+        game_name: title,
+        game_image: image,
+        user_id: 0,
+        status: input.status,
+        my_rating: input.my_rating
+      })
+    })
   }
+
+  const handleChange = event => {
+    const { name, value } = event.target;
+
+    setInput(prevState => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = event => {
+    event.preventDefault();
+    addGameToCollection();
+  };
+
   return (
     <div>
       <div className="container d-flex  mt-4">
@@ -75,7 +106,7 @@ export default function Gameprofile() {
             <Modal show={show} onHide={handleClose}>
               <Modal.Header closeButton>
                 <Modal.Title>
-                  Add {game.name} to your game collection
+                 <h2>Add {game.name} to your game collection</h2> 
                 </Modal.Title>
               </Modal.Header>
               <Modal.Body>
@@ -84,20 +115,20 @@ export default function Gameprofile() {
                   <select
                     name="status"
                     className="form-select"
-                    // onChange={(e) => handleChange(e)}
+                    onChange={(e) => handleChange(e)}
                   >
                     <option selected>Choose game status...</option>
-                    <option value="To Play">To play</option>
-                    <option value="Currently playing">Currently Playing</option>
-                    <option value="Done Playing">Done Playing</option>
+                    <option value="1">To play</option>
+                    <option value="2">Currently Playing</option>
+                    <option value="3">Done Playing</option>
                   </select>
                 </p>
                 <h5>Set your rating</h5>
                 <p>
                   <select
-                    name="rating"
+                    name="my_rating"
                     className="form-select"
-                    // onChange={(e) => handleChange(e)}
+                    onChange={(e) => handleChange(e)}
                   >
                     <option selected>Choose your rating...</option>
                     <option value="1">1</option>
@@ -112,7 +143,7 @@ export default function Gameprofile() {
                 <Button variant="secondary" onClick={handleClose}>
                   Close
                 </Button>
-                <Button variant="primary" onClick={handleClose}>
+                <Button type="submit" variant="primary" name="game_name" value={game.name} onClick={handleSubmit}>
                   Save Game
                 </Button>
               </Modal.Footer>
