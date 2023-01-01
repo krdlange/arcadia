@@ -28,8 +28,8 @@ router.get("/", (req, res) => {
 
 /* POST game to collection */
   router.post("/", async (req, res) => {
-    let {api_id, user_id, status, my_rating} = req.body;
-    let sql = (`INSERT INTO game_collection (api_id, user_id, status, my_rating) VALUES ('${api_id}', '${user_id}','${status}','${my_rating}');`);
+    let {api_id, game_name, game_image, user_id, status, my_rating} = req.body;
+    let sql = (`INSERT INTO game_collection (api_id, game_name, game_image, user_id, status, my_rating) VALUES ('${api_id}','${game_name}','${game_image}','${user_id}','${status}','${my_rating}')`);
   
     try {
       await db(sql); //action
