@@ -5,24 +5,29 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 export default function Mygames() {
-  const [myCollection, setMyCollection] = useState([]); //collection list
+  const [myGames, setMyGames] = useState([]); //collection list
   const { id } = useParams(); //api id
   //for modal
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = (id) => {
+    setShow(true);
+    setGameId(id);
+  };
 
   //store data state of clicked game
   const [title, setTitle] = useState();
   const [image, setImage] = useState();
   const [apiId, setApiId] = useState();
+  const [gameId, setGameId] = useState();
+
 
   const status = ["To play", "Currently Playing", "Done"];
-  const ratings = ["Not Rated","1","2","3","4","5",];
+  const ratings = ["Not Rated", "1", "2", "3", "4", "5"];
   //input for edit
   const [input, setInput] = useState({
-    api_id: "",
-    user_id: "",
+    // api_id: "",
+    // user_id: "",
     status: "",
     my_rating: "",
   });
@@ -36,26 +41,24 @@ export default function Mygames() {
   const viewList = async () => {
     const response = await fetch("/gamecollection");
     const list = await response.json();
-    setMyCollection(list);
+    setMyGames(list);
     console.log(list);
   };
 
   //edit status
   const updateGame = async () => {
-    const response = await fetch("/gamecollection", {
+    const response = await fetch(`/gamecollection/${gameId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        api_id: apiId,
-        game_name: title,
-        game_image: image,
-        user_id: 0,
         status: input.status,
         my_rating: input.my_rating,
       }),
     });
+    const updatedList = await response.json();
+    setMyGames(updatedList);
   };
 
   const handleChange = (event) => {
@@ -84,7 +87,7 @@ export default function Mygames() {
       });
       const updatedList = await response.json();
       // console.log(updatedList);
-      setMyCollection(updatedList);
+      setMyGames(updatedList);
     }
   };
 
@@ -93,9 +96,9 @@ export default function Mygames() {
       <div className="mt-4">
         <h1 className="mb-4 mt-4">My games</h1>
 
-        {myCollection && (
+        {myGames && (
           <div className="d-flex flex-wrap row">
-            {myCollection.map((gameInfo, index) => (
+            {myGames.map((gameInfo, index) => (
               <div className="col-4 card" key={index}>
                 <div className="card-body" key={index}>
                   <img
@@ -108,13 +111,15 @@ export default function Mygames() {
                   </div>
                   <div className="d-flex justify-content-between">
                     <div>
-                      <h4><span className="badge bg-success me-1">
-                        My Rating: {ratings[`${gameInfo.my_rating}`]}
-                      </span>
+                      <h4>
+                        <span className="badge bg-success me-1">
+                          My Rating: {ratings[`${gameInfo.my_rating}`]}
+                        </span>
                       </h4>
-                      <h4><span className="badge bg-success">
-                      {status[`${gameInfo.status}`]}
-                      </span>
+                      <h4>
+                        <span className="badge bg-success">
+                          {status[`${gameInfo.status}`]}
+                        </span>
                       </h4>
                     </div>
                     <div>
@@ -130,8 +135,8 @@ export default function Mygames() {
 
                       <button
                         className="btn btn-primary btn-m"
-                        onClick={(e) => {
-                          handleShow(e);
+                        onClick={() => {
+                          handleShow(gameInfo.id);
                         }}
                       >
                         Edit <i className="fa-solid fa-pen-to-square"></i>
@@ -145,11 +150,11 @@ export default function Mygames() {
         )}
       </div>
 
-      {myCollection && (
+      {myGames && (
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>
-              <h2>Edit {myCollection.name}</h2>
+              <h2>Edit {myGames.game_name}'s info</h2>
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -157,25 +162,24 @@ export default function Mygames() {
             <p>
               <select
                 name="status"
-                value="status"
                 className="form-select"
                 onChange={(e) => handleChange(e)}
               >
                 <option selected>Choose game status...</option>
-                <option value="1">To play</option>
-                <option value="2">Currently Playing</option>
-                <option value="3">Done Playing</option>
+                <option value="0">To play</option>
+                <option value="1">Currently Playing</option>
+                <option value="2">Done Playing</option>
               </select>
             </p>
             <h5>Set your rating</h5>
             <p>
               <select
-                value="my_rating"
                 name="my_rating"
                 className="form-select"
                 onChange={(e) => handleChange(e)}
               >
                 <option selected>Choose your rating...</option>
+                <option value="0">Rate Later</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -191,8 +195,6 @@ export default function Mygames() {
             <Button
               type="submit"
               variant="primary"
-              name="game_name"
-              value={myCollection.name}
               onClick={handleSubmit}
             >
               Save Game
