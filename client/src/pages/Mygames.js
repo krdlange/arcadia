@@ -17,6 +17,8 @@ export default function Mygames() {
   const [image, setImage] = useState();
   const [apiId, setApiId] = useState();
 
+  const status = ["To play", "Currently Playing", "Done"];
+  const ratings = ["Not Rated","1","2","3","4","5",];
   //input for edit
   const [input, setInput] = useState({
     api_id: "",
@@ -39,7 +41,7 @@ export default function Mygames() {
   };
 
   //edit status
-  const updateGameCollection = async () => {
+  const updateGame = async () => {
     const response = await fetch("/gamecollection", {
       method: "PUT",
       headers: {
@@ -67,7 +69,23 @@ export default function Mygames() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    updateGameCollection();
+    updateGame();
+  };
+
+  const deleteGame = async (id) => {
+    // console.log(id);
+    let confirmDelete = window.confirm("Delete game?");
+    if (confirmDelete) {
+      const response = await fetch(`/gamecollection/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const updatedList = await response.json();
+      // console.log(updatedList);
+      setMyCollection(updatedList);
+    }
   };
 
   return (
@@ -90,14 +108,26 @@ export default function Mygames() {
                   </div>
                   <div className="d-flex justify-content-between">
                     <div>
-                      <span className="badge bg-success me-1">
-                        Rating: {gameInfo.my_rating}
+                      <h4><span className="badge bg-success me-1">
+                        My Rating: {ratings[`${gameInfo.my_rating}`]}
                       </span>
-                      <span className="badge bg-success">
-                        {gameInfo.status}
+                      </h4>
+                      <h4><span className="badge bg-success">
+                      {status[`${gameInfo.status}`]}
                       </span>
+                      </h4>
                     </div>
                     <div>
+                      <button
+                        className="btn btn-secondary btn-m me-2"
+                        onClick={() => {
+                          deleteGame(gameInfo.id);
+                        }}
+                      >
+                        Delete{" "}
+                        <i className="fa fa-trash" aria-hidden="true"></i>
+                      </button>
+
                       <button
                         className="btn btn-primary btn-m"
                         onClick={(e) => {
@@ -114,7 +144,6 @@ export default function Mygames() {
           </div>
         )}
       </div>
-
 
       {myCollection && (
         <Modal show={show} onHide={handleClose}>
