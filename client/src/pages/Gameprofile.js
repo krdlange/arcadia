@@ -57,7 +57,9 @@ export default function Gameprofile() {
         status: input.status,
         my_rating: input.my_rating
       })
-    })
+    })     
+    alert("Game saved!");
+    setShow(false);
   }
 
   const handleChange = event => {
