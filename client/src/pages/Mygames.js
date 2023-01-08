@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
+// import Form from "react-bootstrap/Form";
 
 export default function Mygames() {
-  const [myGames, setMyGames] = useState([]); //collection list
-  const { id } = useParams(); //api id
+  const [myGames, setMyGames] = useState([]); //user's collection
+  // const { id } = useParams(); //api id
+
   //for modal
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -16,14 +17,15 @@ export default function Mygames() {
   };
 
   //store data state of clicked game
-  const [title, setTitle] = useState();
-  const [image, setImage] = useState();
-  const [apiId, setApiId] = useState();
+  // const [title, setTitle] = useState();
+  // const [image, setImage] = useState();
+  // const [apiId, setApiId] = useState();
   const [gameId, setGameId] = useState();
 
-
+  //for status & rating
   const status = ["To play", "Currently Playing", "Done"];
   const ratings = ["Not Rated", "1", "2", "3", "4", "5"];
+  
   //input for edit
   const [input, setInput] = useState({
     // api_id: "",
@@ -32,12 +34,12 @@ export default function Mygames() {
     my_rating: "",
   });
 
-  //render list
+  //render user's collection
   useEffect(() => {
     viewList();
   }, []);
 
-  //fetch list
+  //fetch user's collection
   const viewList = async () => {
     const response = await fetch("/gamecollection");
     const list = await response.json();
@@ -45,7 +47,7 @@ export default function Mygames() {
     console.log(list);
   };
 
-  //edit status
+  //edit user's game status & rating
   const updateGame = async () => {
     const response = await fetch(`/gamecollection/${gameId}`, {
       method: "PUT",
@@ -75,6 +77,7 @@ export default function Mygames() {
     updateGame();
   };
 
+    //delete game from user's collection
   const deleteGame = async (id) => {
     // console.log(id);
     let confirmDelete = window.confirm("Delete game?");
@@ -97,18 +100,22 @@ export default function Mygames() {
         <h1 className="mb-4 mt-4">My games</h1>
 
         {myGames && (
-          <div className="d-flex flex-wrap row">
+          <div className="row">
             {myGames.map((gameInfo, index) => (
-              <div className="col-4 card" key={index}>
+              <div className="col-md-4 mb-4">
+              <div className="card" key={index}>
                 <div className="card-body" key={index}>
-                  <img
-                    height="220"
-                    className="card-img-top mb-2"
-                    src={gameInfo.game_image}
-                  />
-                  <div className="card-title" key={index}>
-                    <h3>{gameInfo.game_name}</h3>
-                  </div>
+                  <a href={`/gameprofile/${gameInfo.api_id}`}>
+                    <img
+                      alt=""
+                      height="220"
+                      className="card-img-top mb-2"
+                      src={gameInfo.game_image}
+                    />
+                    <div className="card-title" key={index}>
+                      <h3>{gameInfo.game_name}</h3>
+                    </div>
+                  </a>
                   <div className="d-flex justify-content-between">
                     <div>
                       <h4>
@@ -145,6 +152,7 @@ export default function Mygames() {
                   </div>
                 </div>
               </div>
+              </div>
             ))}
           </div>
         )}
@@ -154,7 +162,7 @@ export default function Mygames() {
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>
-              <h2>Edit {myGames.game_name}'s info</h2>
+              <h2>Edit game</h2>
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -192,11 +200,7 @@ export default function Mygames() {
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button
-              type="submit"
-              variant="primary"
-              onClick={handleSubmit}
-            >
+            <Button type="submit" variant="primary" onClick={handleSubmit}>
               Save Game
             </Button>
           </Modal.Footer>
