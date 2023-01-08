@@ -1,17 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import AddGameForm from "../components/ui/AddGameForm";
+import Button from "../components/ui/Button";
+import Modal from "react-bootstrap/Modal";
+import { useParams } from "react-router-dom";
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 const BASE_URL = "https://api.rawg.io/api/games";
 
 export default function Searchresults(props) {
   const [games, setGames] = useState({}); //API result
-  // const [myList, setMyList] = useState({
-  //   //save game to list
-  //   status: "",
-  //   api_id: ""
-  // });
+  const { id } = useParams(); //api id
+  const [title, setTitle] = useState();
+  const [image, setImage] = useState();
+
+  const [input, setInput] = useState({
+    api_id: `${id}`,
+    user_id: "",
+    status: "",
+    my_rating: "",
+  });
 
   //get location of searchbar input
   const location = useLocation();
@@ -38,10 +47,43 @@ export default function Searchresults(props) {
     console.log(data);
   };
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    addGameToCollection();
+  };
+
+  const addGameToCollection = async () => {
+    const response = await fetch("/gamecollection", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        api_id: `${id}`,
+        game_name: title,
+        game_image: image,
+        user_id: 0,
+        status: input.status,
+        my_rating: input.my_rating,
+      }),
+    });
+    alert("Game saved!");
+    setShow(false);
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setInput((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
   return (
     <div className="container">
       <div className="mt-4">
-        <h1>Search results</h1>
+        <h1 className="mb-4 mt-4">Search results</h1>
       </div>
       {games.results && (
         <div className="row">
@@ -68,7 +110,7 @@ export default function Searchresults(props) {
                 <div className="d-flex mt-1 mb-2 justify-content-center">
                   <div className="mb-2 me-2">
                     {/* HANDLE THE GAME BY OPENING MODAL - COPY DATA TO MODAL */}
-                    <button
+                    {/* <button
                       onClick={(e) => {
                         handleShow(e, gameElement);
                         setModalData(gameElement);
@@ -76,15 +118,55 @@ export default function Searchresults(props) {
                       className="btn btn-primary btn-m"
                     >
                       Add to list
-                    </button>
+                    </button> */}
+                    {/* <Button
+                      className="btn btn-primary btn-m"
+                      ButtonText="Add to list"
+                      onClick={(e) => {
+                        handleShow(e, gameElement);
+                        setModalData(gameElement);
+                      }}
+                    /> */}
+                    <div className="mt-4">
+                      {/* <Button
+                        className="btn btn-primary"
+                        onClick={handleShow}
+                        ButtonText="Add to my games"
+                      />
+
+                      <Modal show={show} onHide={handleClose}>
+                      <Modal.Header closeButton>
+
+                        <AddGameForm />
+                        </Modal.Header>
+                        <Modal.Footer>
+                          
+                          <Button
+                            className="btn btn-secondary"
+                            onClick={handleClose}
+                            ButtonText="close"
+                          />
+                        
+                          <Button
+                            type="submit"
+                            name="game_name"
+                            value={gameElement.name}
+                            className="btn btn-primary"
+                            onClick={handleSubmit}
+                            ButtonText="save game"
+                          />
+                        </Modal.Footer>
+                      </Modal> */}
+                    </div>
                   </div>
 
                   <div className="mb-2 me-2">
                     {/* If user clicks on the result they are linked to gameprofile using the id*/}
                     <Link to={`/gameprofile/${gameElement.id}`}>
-                      <button className="btn btn-primary btn-m">
-                        View Game
-                      </button>
+                      <Button
+                        className="btn btn-primary btn-m"
+                        ButtonText="View Game"
+                      />
                     </Link>
                   </div>
                 </div>

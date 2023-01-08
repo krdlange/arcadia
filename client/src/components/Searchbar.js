@@ -1,24 +1,25 @@
 import React from "react";
 import { useState } from "react";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
+import Button from "./ui/Button";
 
 export default function Searchbar() {
   const [input, setInput] = useState("");
   const navigate = useNavigate();
 
-  //handle changes in searchbox input
-  const handleInputChange = (event) => {
+  //of searchbox input
+  const handleChange = (event) => {
     setInput(event.target.value);
   };
 
-  //handle click/submit of searchbox input
+  //of searchbox input
   const handleSubmit = (event) => {
     event.preventDefault();
     setInput(input);
     // console.log(input);
     navigate("/searchresults", { state: `${input}` });
+    window.location.reload();
   };
 
   return (
@@ -30,11 +31,9 @@ export default function Searchbar() {
           value={input}
           className="me-2"
           aria-label="Search"
-          onChange={(e) => handleInputChange(e)}
+          onChange={(e) => handleChange(e)}
         />
-        <Button variant="outline-success" type="submit">
-          Search
-        </Button>
+        <Button className="btn btn-primary" ButtonText="Search" onClick={handleSubmit} />
       </Form>
     </div>
   );

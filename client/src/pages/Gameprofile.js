@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import Button from "../components/ui/Button";
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 const BASE_URL = "https://api.rawg.io/api/games";
@@ -101,9 +101,7 @@ export default function Gameprofile() {
           )}
 
           <div className="mt-4">
-            <Button variant="primary" onClick={handleShow}>
-              Add to collection
-            </Button>
+            <Button className="btn btn-primary" onClick={handleShow} ButtonText="Add to my games"/>
 
             <Modal show={show} onHide={handleClose}>
               <Modal.Header closeButton>
@@ -144,12 +142,14 @@ export default function Gameprofile() {
                 </p>
               </Modal.Body>
               <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
+                {/* <Button variant="secondary" onClick={handleClose}>
                   Close
-                </Button>
-                <Button type="submit" variant="primary" name="game_name" value={game.name} onClick={handleSubmit}>
+                </Button> */}
+                <Button className="btn btn-secondary" onClick={handleClose} ButtonText="close"/>
+                {/* <Button type="submit" variant="primary" name="game_name" value={game.name} onClick={handleSubmit}>
                   Save Game
-                </Button>
+                </Button> */}
+                 <Button type="submit" name="game_name" value={game.name} className="btn btn-primary" onClick={handleSubmit}ButtonText="save game"/>
               </Modal.Footer>
             </Modal>
           </div>
