@@ -145,11 +145,11 @@ export default function Gameprofile() {
                 {/* <Button variant="secondary" onClick={handleClose}>
                   Close
                 </Button> */}
-                <Button className="btn btn-secondary" onClick={handleClose} ButtonText="close"/>
+                <Button className="btn btn-secondary" onClick={handleClose} ButtonText="Close"/>
                 {/* <Button type="submit" variant="primary" name="game_name" value={game.name} onClick={handleSubmit}>
                   Save Game
                 </Button> */}
-                 <Button type="submit" name="game_name" value={game.name} className="btn btn-primary" onClick={handleSubmit}ButtonText="save game"/>
+                 <Button type="submit" name="game_name" value={game.name} className="btn btn-primary" onClick={handleSubmit}ButtonText="Save game"/>
               </Modal.Footer>
             </Modal>
           </div>
