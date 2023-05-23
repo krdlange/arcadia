@@ -1,16 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
-import Button from "../components/ui/Button";
+import Button from "../components/Button";
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 const BASE_URL = "https://api.rawg.io/api/games";
+
 
 export default function Gameprofile() {
   const [game, setGame] = useState([]); //show game profile
   const { id } = useParams(); //api id
   const [title, setTitle] = useState();
   const [image, setImage] = useState();
+  const [trailer, setTrailer] = useState([]);
+
+  const options = { year: "numeric", month: "long", day: "numeric" };
+  const releaseDate = new Date(game.released).toLocaleDateString(
+    "en-US",
+    options
+  );
 
   //modal
   const [show, setShow] = useState(false);
@@ -18,16 +26,17 @@ export default function Gameprofile() {
   const handleShow = () => setShow(true);
 
   //add to db
-  const [input, setInput] = useState ({
+  const [input, setInput] = useState({
     api_id: `${id}`,
     user_id: "",
     status: "",
-    my_rating: ""
+    my_rating: "",
   });
 
   //call fetchGame after render
   useEffect(() => {
     fetchGame();
+    fetchGameTrailer();
   }, []);
 
   //fetch game profile
@@ -42,12 +51,21 @@ export default function Gameprofile() {
     setImage(gameInfo.background_image);
   };
 
+  const fetchGameTrailer = async () => {
+    const response = await fetch(`${BASE_URL}/${id}/movies?key=${API_KEY}`, {
+      method: "GET",
+    });
+    const gameTrailer = await response.json();
+    console.log(gameTrailer);
+    setTrailer(gameTrailer);
+  }
+
   //add game to my collection
   const addGameToCollection = async () => {
     const response = await fetch("/gamecollection", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         api_id: `${id}`,
@@ -55,23 +73,23 @@ export default function Gameprofile() {
         game_image: image,
         user_id: 0,
         status: input.status,
-        my_rating: input.my_rating
-      })
-    })     
+        my_rating: input.my_rating,
+      }),
+    });
     alert("Game saved!");
     setShow(false);
-  }
+  };
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     const { name, value } = event.target;
 
-    setInput(prevState => ({
+    setInput((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
 
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     addGameToCollection();
   };
@@ -86,7 +104,8 @@ export default function Gameprofile() {
         <div>
           <h1>{game.name}</h1>
           <div>
-            <h5>Release date: {game.released}</h5>
+            <h5>Average playtime: {game.playtime} Hours</h5>
+            <h5>Release date: {releaseDate}</h5>
           </div>
           {game.genres && (
             <div>
@@ -101,12 +120,16 @@ export default function Gameprofile() {
           )}
 
           <div className="mt-4">
-            <Button className="btn btn-primary" onClick={handleShow} ButtonText="Add to my games"/>
+            <Button
+              className="btn btn-primary"
+              onClick={handleShow}
+              ButtonText="Add to my games"
+            />
 
             <Modal show={show} onHide={handleClose}>
               <Modal.Header closeButton>
                 <Modal.Title>
-                 <h2>Add {game.name} to your game collection</h2> 
+                  <h2>Add {game.name} to your game collection</h2>
                 </Modal.Title>
               </Modal.Header>
               <Modal.Body>
@@ -137,7 +160,6 @@ export default function Gameprofile() {
                     <option value="3">3</option>
                     <option value="4">4</option>
                     <option value="5">5</option>
-
                   </select>
                 </p>
               </Modal.Body>
@@ -145,11 +167,22 @@ export default function Gameprofile() {
                 {/* <Button variant="secondary" onClick={handleClose}>
                   Close
                 </Button> */}
-                <Button className="btn btn-secondary" onClick={handleClose} ButtonText="Close"/>
+                <Button
+                  className="btn btn-secondary"
+                  onClick={handleClose}
+                  ButtonText="Close"
+                />
                 {/* <Button type="submit" variant="primary" name="game_name" value={game.name} onClick={handleSubmit}>
                   Save Game
                 </Button> */}
-                 <Button type="submit" name="game_name" value={game.name} className="btn btn-primary" onClick={handleSubmit}ButtonText="Save game"/>
+                <Button
+                  type="submit"
+                  name="game_name"
+                  value={game.name}
+                  className="btn btn-primary"
+                  onClick={handleSubmit}
+                  ButtonText="Save game"
+                />
               </Modal.Footer>
             </Modal>
           </div>
@@ -228,20 +261,20 @@ export default function Gameprofile() {
                 )}
               </div>
 
-              <h5 className="card-title mb-1">ESRB Rating </h5>
+              {/* <h5 className="card-title mb-1">ESRB Rating </h5>
               <div className="card-text mb-4">
                 {game.esrb_rating && (
                   <div>
                     {Object.keys(game.esrb_rating).map((key, index) => {
                       return (
                         <div key={index}>
-                          {key} : {game.esrb_rating[key]}
+                          {game.esrb_rating[key]}
                         </div>
                       );
                     })}
                   </div>
                 )}
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

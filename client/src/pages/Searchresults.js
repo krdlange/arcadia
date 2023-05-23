@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import AddGameForm from "../components/ui/AddGameForm";
-import Button from "../components/ui/Button";
+import Button from "../components/Button";
 import Modal from "react-bootstrap/Modal";
 import { useParams } from "react-router-dom";
 

@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
-import Button from "./ui/Button";
+import Button from "./Button";
 
 export default function Searchbar() {
   const [input, setInput] = useState("");
