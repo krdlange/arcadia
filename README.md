@@ -10,7 +10,7 @@ Arcadia is built using React.js, Express.js Node.js, MySQL, Rawg.io API and Boot
 
 ### Front-end:
 
-* Run`npm install` in project directory. This will install server-related dependencies such as express.
+* Run `npm install` in project directory. This will install server-related dependencies as mentioned.
 * `cd client` and run `npm install`. This will install client dependencies (React).
 
 ### Database:
@@ -28,7 +28,7 @@ Arcadia is built using React.js, Express.js Node.js, MySQL, Rawg.io API and Boot
 
 Run `npm run migrate` in the project folder of this repository, in a new terminal window. This will create a table called 'arcadia' in your database.
 
-In your MySQL console, you can run `use arcadia`; and then `describe arcadia`; to see the structure of the game_collection & users table.
+In your MySQL console, you can run `use arcadia;` and then `describe arcadia;` to see the structure of the game_collection & users table.
 
 ### API you'll need
 
@@ -39,4 +39,4 @@ rawg.io: https://rawg.io/apidocs
 
 ### Development
 Run `npm start` in project directory to start the Express server on port 5000
-In another terminal, do `cd client` and `run npm start` to start the client in development mode with hot reloading in port 3000.
+In another terminal, do `cd client` and `npm start` to start the client in development mode with hot reloading in port 3000.
