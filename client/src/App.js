@@ -1,9 +1,9 @@
-// import "./App.css";
+// import "./App.scss";
 import { Routes, Route } from "react-router-dom";
 import Mygames from "./pages/Mygames";
 import Gameprofile from "./pages/Gameprofile";
 import Searchresults from "./pages/Searchresults";
-import NavigationBar from "./components/Navigationbar";
+import NavigationBar from "./components/NavigationBar";
 
 function App() {
   

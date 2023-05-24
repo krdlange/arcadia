@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
-import Button from "../components/Button";
+import Button from "../components/PrimaryButton";
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 const BASE_URL = "https://api.rawg.io/api/games";
