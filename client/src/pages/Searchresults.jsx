@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import Button from "../components/Button";
+import Button from "../components/PrimaryButton";
 import Modal from "react-bootstrap/Modal";
 import { useParams } from "react-router-dom";
 
@@ -99,6 +99,7 @@ export default function Searchresults(props) {
                     key={index}
                     className="card-img-top"
                     src={gameElement.background_image}
+                    alt={gameElement.name}
                   />
                 </div>
 

@@ -8,10 +8,10 @@ import {
   NavDropdown,
 } from "react-bootstrap";
 import Searchbar from "./Searchbar";
+import "./NavigationBar.scss";
 
-export default function NavigationBar() {
+function NavigationBar() {
   return (
-    <div>
       <div>
         {["xxl"].map((expand) => (
           <Navbar
@@ -19,7 +19,6 @@ export default function NavigationBar() {
             bg="dark"
             variant="dark"
             expand={expand}
-            className="mb-3"
           >
             <Container fluid>
               <Navbar.Brand href="#">Arcadia</Navbar.Brand>
@@ -63,7 +62,10 @@ export default function NavigationBar() {
             </Container>
           </Navbar>
         ))}
+        ;
       </div>
-    </div>
+
   );
 }
+
+export default NavigationBar;

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
+import PrimaryButton from "../components/PrimaryButton";
 import Form from "react-bootstrap/Form";
 
 const API_KEY = process.env.REACT_APP_API_KEY;
@@ -113,7 +113,7 @@ export default function Search() {
             <h1>Search game</h1>
             <input className="form-control form-control" placeholder="Search..." value={input} onChange={(e) => handleInputChange(e)}></input>
           </label>
-          <button className="btn btn-primary" type="submit">Submit</button>
+          <PrimaryButton className="btn btn-primary" type="submit">Submit</PrimaryButton>
         </div>
       </form>
       </div>
@@ -140,7 +140,7 @@ export default function Search() {
                 
 
                 {/* HANDLE THE GAME BY OPENING MODAL - COPY DATA TO MODAL */}
-                  <button
+                  <PrimaryButton
                     onClick={(e) => {
                       handleShow(e, gameElement);
                       setModalData(gameElement);
@@ -148,15 +148,15 @@ export default function Search() {
                     className="btn btn-primary btn-m"
                   >
                     Add to list
-                  </button>
+                  </PrimaryButton>
                 </div>
 
                 <div className="mb-2">
                   {/* If user clicks on the result they are linked to gameprofile using the id*/}
                   <Link to={`/gameprofile/${gameElement.id}`}>
-                    <button className="btn btn-primary btn-m">
+                    <PrimaryButton className="btn btn-primary btn-m">
                       View Game
-                    </button>
+                    </PrimaryButton>
                   </Link>
                 </div>
                 </div>
@@ -190,13 +190,13 @@ export default function Search() {
             
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
+            <PrimaryButton variant="secondary" onClick={handleClose}>
               Close
-            </Button>
+            </PrimaryButton>
             {/* <Button name="api_id" variant="primary" onClick={e => handleClick(e, modalData.id)}> */}
-            <Button name="api_id">
+            <PrimaryButton name="api_id">
               Save Changes
-            </Button>
+            </PrimaryButton>
           </Modal.Footer>
         </Modal>
       )}
