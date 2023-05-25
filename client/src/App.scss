@@ -1,8 +1,28 @@
 // @import "~bootstrap/scss/bootstrap";
 @import "./components/NavigationBar.scss";
 
-$body-bg: rgb(0, 0, 0);
-$body-color: rgb(255, 255, 255);
-$card-bg: #000;
+// $body-bg: rgb(255, 255, 255);
+// $body-color: rgb(0, 0, 0);
+$navbar-bg: #ff0000;
+$card-bg: #ffffff;
+$font-family-sans-serif: 'Barlow', sans-serif;
+$theme-colors: (
+  "primary":    rgb(0, 0, 0),
+  "secondary":  rgb(0, 0, 0),
+  "success":     rgb(0, 0, 0),
+  "info":        rgb(0, 0, 0),
+  "warning":     rgb(0, 0, 0),
+  "danger":      rgb(0, 0, 0),
+  "light":       rgb(0, 0, 0),
+  "dark":       rgb(255, 255, 255)
+);
+
+$container-max-widths: ( //custom widths
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 960px,
+  xxl: 960px
+);
 
 @import '~bootstrap/scss/bootstrap.scss';

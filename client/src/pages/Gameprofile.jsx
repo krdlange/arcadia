@@ -6,13 +6,12 @@ import Button from "../components/PrimaryButton";
 const API_KEY = process.env.REACT_APP_API_KEY;
 const BASE_URL = "https://api.rawg.io/api/games";
 
-
 export default function Gameprofile() {
   const [game, setGame] = useState([]); //show game profile
   const { id } = useParams(); //api id
   const [title, setTitle] = useState();
   const [image, setImage] = useState();
-  const [trailer, setTrailer] = useState([]);
+  // const [trailer, setTrailer] = useState([]);
 
   const options = { year: "numeric", month: "long", day: "numeric" };
   const releaseDate = new Date(game.released).toLocaleDateString(
@@ -36,7 +35,7 @@ export default function Gameprofile() {
   //call fetchGame after render
   useEffect(() => {
     fetchGame();
-    fetchGameTrailer();
+    // fetchGameTrailer();
   }, []);
 
   //fetch game profile
@@ -51,14 +50,14 @@ export default function Gameprofile() {
     setImage(gameInfo.background_image);
   };
 
-  const fetchGameTrailer = async () => {
-    const response = await fetch(`${BASE_URL}/${id}/movies?key=${API_KEY}`, {
-      method: "GET",
-    });
-    const gameTrailer = await response.json();
-    console.log(gameTrailer);
-    setTrailer(gameTrailer);
-  }
+  // const fetchGameTrailer = async () => {
+  //   const response = await fetch(`${BASE_URL}/${id}/movies?key=${API_KEY}`, {
+  //     method: "GET",
+  //   });
+  //   const gameTrailer = await response.json();
+  //   console.log(gameTrailer);
+  //   setTrailer(gameTrailer);
+  // }
 
   //add game to my collection
   const addGameToCollection = async () => {
@@ -95,31 +94,54 @@ export default function Gameprofile() {
   };
 
   return (
-    <div>
-      <div className="container d-flex  mt-4">
-        <div className="col-md-4 me-4">
-          <img className="img-fluid" src={game.background_image} />
-        </div>
-
-        <div>
+    <div className="container mt-4">
+      <div className="d-flex justify-content-between align-items-end">
+        <div className="title-genre-info d-flex flex-column col-md-8 mb-2">
           <h1>{game.name}</h1>
-          <div>
-            <h5>Average playtime: {game.playtime} Hours</h5>
-            <h5>Release date: {releaseDate}</h5>
-          </div>
           {game.genres && (
-            <div>
+            <div className="d-flex justify-content-start">
+              <span className="me-1">Genre:</span>
               {game.genres.map((genres) => {
                 return (
-                  <h5 key={genres.id}>
-                    <span className="badge bg-secondary">{genres.name}</span>
-                  </h5>
+                  <div className="me-1" key={genres.id}>
+                    {genres.name},
+                  </div>
                 );
               })}
             </div>
           )}
+        </div>
 
-          <div className="mt-4">
+        {game.platforms && (
+          <div className="d-flex mb-2 align-self-end ">
+            {game.platforms.map((platforms) => {
+              return (
+                <div className="me-1" key={platforms.platform.id}>
+                  <span className="badge bg-secondary">
+                    {platforms.platform.name}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
+      <div className="d-flex">
+        <div className="col-md-8 me-2">
+          <img
+            className="img-fluid rounded-3"
+            src={game.background_image}
+            alt={game.name}
+          />
+        </div>
+
+        <div className="card col-md-4 text-center">
+          <div className="card-body">
+            <h5 className="card-title">
+              Average playtime: {game.playtime} Hours
+            </h5>
+            <p className="card-text">Release date: {releaseDate}</p>
             <Button
               className="btn btn-primary"
               onClick={handleShow}
@@ -188,6 +210,8 @@ export default function Gameprofile() {
           </div>
         </div>
       </div>
+
+      {/* Description */}
       <div className="container d-flex mt-4">
         <div className="row">
           <div className="card col-8 me-3">
@@ -244,7 +268,7 @@ export default function Gameprofile() {
               <h5 className="card-title mb-1 mt-2">Metacritic rating </h5>
               <h2 className="card-text mb-4">{game.rating}</h2>
 
-              <h5 className="card-title mb-1">Platforms </h5>
+              {/* <h5 className="card-title mb-1">Platforms </h5>
               <div className="card-text mb-4">
                 {game.platforms && (
                   <div>
@@ -259,7 +283,7 @@ export default function Gameprofile() {
                     })}
                   </div>
                 )}
-              </div>
+              </div> */}
 
               {/* <h5 className="card-title mb-1">ESRB Rating </h5>
               <div className="card-text mb-4">
