@@ -15,12 +15,12 @@ function NavigationBar() {
       <div>
         {["xxl"].map((expand) => (
           <Navbar
+          className="custom-navbar"
             key={expand}
             bg="dark"
-            variant="dark"
             expand={expand}
           >
-            <Container fluid>
+            <Container className="custom-nav-container" fluid>
               <Navbar.Brand href="#">Arcadia</Navbar.Brand>
               <Navbar.Toggle
                 aria-controls={`offcanvasNavbar-expand-${expand}`}
