@@ -95,8 +95,8 @@ export default function Gameprofile() {
 
   return (
     <div className="container mt-4">
-      <div className="d-flex justify-content-between align-items-end">
-        <div className="title-genre-info d-flex flex-column col-md-8 mb-2">
+      <div className="d-md-flex justify-content-between">
+        <div className="d-flex flex-column col-md-8 mb-2">
           <h1>{game.name}</h1>
           {game.genres && (
             <div className="d-flex justify-content-start">
@@ -113,7 +113,7 @@ export default function Gameprofile() {
         </div>
 
         {game.platforms && (
-          <div className="d-flex mb-2 align-self-end ">
+          <div className="d-flex mb-2 align-self-end">
             {game.platforms.map((platforms) => {
               return (
                 <div className="me-1" key={platforms.platform.id}>
@@ -127,8 +127,8 @@ export default function Gameprofile() {
         )}
       </div>
 
-      <div className="d-flex">
-        <div className="col-md-8 me-2">
+      <div className="d-md-flex justify-content-between me-1">
+        <div className="col-md-8 m-2">
           <img
             className="img-fluid rounded-3"
             src={game.background_image}
@@ -136,7 +136,7 @@ export default function Gameprofile() {
           />
         </div>
 
-        <div className="card col-md-4 text-center">
+        <div className="card col-md-4 text-center m-2">
           <div className="card-body">
             <h5 className="card-title">
               Average playtime: {game.playtime} Hours
@@ -212,9 +212,73 @@ export default function Gameprofile() {
       </div>
 
       {/* Description */}
-      <div className="container d-flex mt-4">
-        <div className="row">
-          <div className="card col-8 me-3">
+      <div className="d-md-flex justify-content-between me-1">
+
+      <div className="card col-md-4 text-center m-2">
+            <div className="card-body">
+              <h5 className="card-title mb-1 mt-2">Metacritic rating </h5>
+              <h2 className="card-text mb-4">{game.rating}</h2>
+
+              <h5 className="card-title mb-1">Platforms </h5>
+              <div className="card-text mb-4">
+                {game.platforms && (
+                  <div>
+                    {game.platforms.map((platforms) => {
+                      return (
+                        <div key={platforms.platform.id}>
+                          <span className="badge bg-secondary">
+                            {platforms.platform.name}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+
+              <h5 className="card-title mb-1">ESRB Rating </h5>
+              <div className="card-text mb-4">
+                {game.esrb_rating && (
+                  <div>
+                    {Object.keys(game.esrb_rating).map((key, index) => {
+                      return (
+                        <div key={index}>
+                          {game.esrb_rating[key]}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+
+              <h5 className="card-title mb-1">Stores </h5>
+              <div className="card-text mb-4">
+                {game.stores && (
+                  <div>
+                    {game.stores.map((stores) => {
+                      return (
+                        <a
+                          href={`http://www.${stores.store.domain}`}
+                          target="_blank" rel="noreferrer"
+                        >
+                          <h5 key={stores.store.name}>
+                            <span
+                              key={stores.store.id}
+                              className="badge bg-secondary me-2"
+                            >
+                              {stores.store.name}
+                            </span>
+                          </h5>
+                        </a>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div className="card col-md-8 m-2">
             <div className="card-body">
               <h5 className="card-title mb-1 mt-2">Description</h5>
               <p className="card-text mb-4">{game.description_raw}</p>
@@ -235,73 +299,8 @@ export default function Gameprofile() {
                   </div>
                 )}
               </div>
-
-              <h5 className="card-title mb-1">Stores </h5>
-              <div className="card-text mb-4">
-                {game.stores && (
-                  <div>
-                    {game.stores.map((stores) => {
-                      return (
-                        <a
-                          href={`http://www.${stores.store.domain}`}
-                          target="_blank"
-                        >
-                          <h5 key={stores.store.name}>
-                            <span
-                              key={stores.store.id}
-                              className="badge bg-secondary me-2"
-                            >
-                              {stores.store.name}
-                            </span>
-                          </h5>
-                        </a>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
             </div>
           </div>
-
-          <div className="card col-3">
-            <div className="card-body">
-              <h5 className="card-title mb-1 mt-2">Metacritic rating </h5>
-              <h2 className="card-text mb-4">{game.rating}</h2>
-
-              {/* <h5 className="card-title mb-1">Platforms </h5>
-              <div className="card-text mb-4">
-                {game.platforms && (
-                  <div>
-                    {game.platforms.map((platforms) => {
-                      return (
-                        <div key={platforms.platform.id}>
-                          <span className="badge bg-secondary">
-                            {platforms.platform.name}
-                          </span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </div> */}
-
-              {/* <h5 className="card-title mb-1">ESRB Rating </h5>
-              <div className="card-text mb-4">
-                {game.esrb_rating && (
-                  <div>
-                    {Object.keys(game.esrb_rating).map((key, index) => {
-                      return (
-                        <div key={index}>
-                          {game.esrb_rating[key]}
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </div> */}
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );
