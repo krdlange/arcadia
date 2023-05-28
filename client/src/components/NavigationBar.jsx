@@ -4,24 +4,23 @@ import {
   Navbar,
   Container,
   Offcanvas,
-  Nav,
-  NavDropdown,
+  Nav
+  // NavDropdown,
 } from "react-bootstrap";
 import Searchbar from "./Searchbar";
-import "./NavigationBar.scss";
 
 function NavigationBar() {
   return (
       <div>
         {["xxl"].map((expand) => (
           <Navbar
-          className="custom-navbar"
+          className="border-bottom border-primary py-4 px-2"
             key={expand}
-            bg="dark"
+            bg="light"
             expand={expand}
           >
-            <Container className="custom-nav-container" fluid>
-              <Navbar.Brand href="#">Arcadia</Navbar.Brand>
+            <Container fluid>
+              <Navbar.Brand href="#"><h1 className="display-1">Arcadia</h1></Navbar.Brand>
               <Navbar.Toggle
                 aria-controls={`offcanvasNavbar-expand-${expand}`}
               />
@@ -32,15 +31,15 @@ function NavigationBar() {
               >
                 <Offcanvas.Header closeButton>
                   <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
-                    Arcadia
+                    <h1 className="display-1">Arcadia</h1>
                   </Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
                   <Nav className="justify-content-end flex-grow-1 pe-3">
                     <Nav.Link as={Link} to="/mygames">
-                      My Games
+                      <h5>My Games</h5>
                     </Nav.Link>
-                    <NavDropdown
+                    {/* <NavDropdown
                       title="My Account"
                       id={`offcanvasNavbarDropdown-expand-${expand}`}
                     >
@@ -54,7 +53,7 @@ function NavigationBar() {
                       <NavDropdown.Item href="#action5">
                         Logout
                       </NavDropdown.Item>
-                    </NavDropdown>
+                    </NavDropdown> */}
                   </Nav>
                   <Searchbar />
                 </Offcanvas.Body>

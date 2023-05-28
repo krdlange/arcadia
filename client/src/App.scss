@@ -1,20 +1,14 @@
-// @import "~bootstrap/scss/bootstrap";
-@import "./components/NavigationBar.scss";
 
-// $body-bg: rgb(255, 255, 255);
-// $body-color: rgb(0, 0, 0);
-$navbar-bg: #ff0000;
-$card-bg: #ffffff;
 $font-family-sans-serif: 'Barlow', sans-serif;
 $theme-colors: (
   "primary":    rgb(0, 0, 0),
   "secondary":  rgb(0, 0, 0),
-  "success":     rgb(0, 0, 0),
-  "info":        rgb(0, 0, 0),
-  "warning":     rgb(0, 0, 0),
-  "danger":      rgb(0, 0, 0),
-  "light":       rgb(0, 0, 0),
-  "dark":       rgb(255, 255, 255)
+  "success":     rgb(56, 104, 73),
+  "info":        rgb(87, 137, 199),
+  "warning":     rgb(235, 204, 146),
+  "danger":      rgb(196, 105, 105),
+  "light":       rgb(255, 255, 255),
+  "dark":       rgb(0, 0, 0)
 );
 
 $container-max-widths: ( //custom widths
@@ -24,5 +18,23 @@ $container-max-widths: ( //custom widths
   xl: 960px,
   xxl: 960px
 );
+
+$font-size-base:            1rem;
+
+$h1-font-size:                $font-size-base * 2;
+$h2-font-size:                $font-size-base * 2;
+$h3-font-size:                $font-size-base * 1.75;
+$h4-font-size:                $font-size-base * 1.5;
+$h5-font-size:                $font-size-base * 1.25;
+$h6-font-size:                $font-size-base;
+
+
+$display-font-sizes: (
+  1: 2rem,
+  2: 1.5rem,
+  3: 1rem
+);
+
+$display-font-weight: 800;
 
 @import '~bootstrap/scss/bootstrap.scss';

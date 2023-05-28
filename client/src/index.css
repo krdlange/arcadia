@@ -9,9 +9,10 @@ body {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 } */
-/* 
+
 ul{
-  list-style: none
-} */
+  list-style: none;
+  margin: 0;
+}
 
  
