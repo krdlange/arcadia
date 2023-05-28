@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import Button from "../components/PrimaryButton";
+import PrimaryButton from "../components/PrimaryButton";
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 const BASE_URL = "https://api.rawg.io/api/games";
@@ -95,25 +96,36 @@ export default function Gameprofile() {
 
   return (
     <div className="container mt-4">
-      <div className="d-md-flex justify-content-between">
-        <div className="d-flex flex-column col-md-8 mb-2">
-          <h1>{game.name}</h1>
-          {game.genres && (
+      <div className="d-md-flex justify-content-md-between">
+        <div className="d-flex flex-column col-md-6 mb-2">
+          <h1 className="display-1">{game.name}</h1>
+          {/* {game.genres && (
             <div className="d-flex justify-content-start">
-              <span className="me-1">Genre:</span>
+              <p className="me-1">Genre:</p>
               {game.genres.map((genres) => {
                 return (
                   <div className="me-1" key={genres.id}>
-                    {genres.name},
+                    {genres.name}
                   </div>
                 );
               })}
+            </div>
+          )} */}
+          {game.genres && (
+            <div className="d-flex justify-content-start">
+              <span className="me-1">Genre:</span>
+              {game.genres.map((genre, index) => (
+                <React.Fragment key={genre.id}>
+                  {index > 0 && <span className="me-1">,</span>}
+                  <span>{genre.name}</span>
+                </React.Fragment>
+              ))}
             </div>
           )}
         </div>
 
         {game.platforms && (
-          <div className="d-flex mb-2 align-self-end">
+          <div className="d-flex flex-wrap col-md-6 mb-2 align-self-end justify-content-md-end">
             {game.platforms.map((platforms) => {
               return (
                 <div className="me-1" key={platforms.platform.id}>
@@ -127,23 +139,43 @@ export default function Gameprofile() {
         )}
       </div>
 
-      <div className="d-md-flex justify-content-between me-1">
-        <div className="col-md-8 m-2">
+      <div className="d-md-flex gap-2 mb-2">
+        <div className="col-md-9">
           <img
-            className="img-fluid rounded-3"
+            className="img-fluid rounded-2"
             src={game.background_image}
             alt={game.name}
           />
         </div>
 
-        <div className="card col-md-4 text-center m-2">
+        <div className="card col-md-3">
           <div className="card-body">
-            <h5 className="card-title">
-              Average playtime: {game.playtime} Hours
-            </h5>
-            <p className="card-text">Release date: {releaseDate}</p>
-            <Button
-              className="btn btn-primary"
+            <div className="mb-4">
+              <h6 className="fw-light">Metacritic rating</h6>
+              <span className="display-1">{game.rating}</span>
+            </div>
+
+            <h6 className="mb-1">ESRB Rating </h6>
+            <div className="display-3 mb-4">
+              {game.esrb_rating && (
+                <div>
+                  {game.esrb_rating.name}
+                </div>
+              )}
+            </div>
+
+            <div className="mb-4">
+              <h6 className="fw-light">Release date</h6>
+              <span className="display-3">{releaseDate}</span>
+            </div>
+
+            <div className="mb-4">
+              <h6 className="fw-light">Average playtime:</h6>
+              <span className="display-3">{game.playtime} Hours</span>
+            </div>
+
+            <PrimaryButton
+              className="btn btn-primary mb-2"
               onClick={handleShow}
               ButtonText="Add to my games"
             />
@@ -212,95 +244,74 @@ export default function Gameprofile() {
       </div>
 
       {/* Description */}
-      <div className="d-md-flex justify-content-between me-1">
+      <div className="d-md-flex gap-2">
+        <div className="card col-md-9 mb-2">
+          <div className="card-body">
+            <h6 className="card-title mt-2 mb-3">Description</h6>
+            <span className="card-text mb-4">{game.description_raw}</span>
+          </div>
+        </div>
 
-      <div className="card col-md-4 text-center m-2">
-            <div className="card-body">
-              <h5 className="card-title mb-1 mt-2">Metacritic rating </h5>
-              <h2 className="card-text mb-4">{game.rating}</h2>
+        <div className="card col-md-3">
+          <div className="card-body">
+            <h6 className="card-title mb-1">Platforms </h6>
+            <div className="card-text mb-4">
+              {game.platforms && (
+                <div>
+                  {game.platforms.map((platforms) => {
+                    return (
+                      <div key={platforms.platform.id}>
+                        <span className="badge bg-secondary">
+                          {platforms.platform.name}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
 
-              <h5 className="card-title mb-1">Platforms </h5>
-              <div className="card-text mb-4">
-                {game.platforms && (
-                  <div>
-                    {game.platforms.map((platforms) => {
-                      return (
-                        <div key={platforms.platform.id}>
-                          <span className="badge bg-secondary">
-                            {platforms.platform.name}
+            <h6 className="card-title mb-1">Stores </h6>
+            <div className="card-text mb-4">
+              {game.stores && (
+                <div>
+                  {game.stores.map((stores) => {
+                    return (
+                      <a
+                        href={`http://www.${stores.store.domain}`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <span key={stores.store.name}>
+                          <span
+                            key={stores.store.id}
+                            className="badge bg-secondary me-1"
+                          >
+                            {stores.store.name}
                           </span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
+                        </span>
+                      </a>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
 
-              <h5 className="card-title mb-1">ESRB Rating </h5>
-              <div className="card-text mb-4">
-                {game.esrb_rating && (
-                  <div>
-                    {Object.keys(game.esrb_rating).map((key, index) => {
-                      return (
-                        <div key={index}>
-                          {game.esrb_rating[key]}
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-
-              <h5 className="card-title mb-1">Stores </h5>
-              <div className="card-text mb-4">
-                {game.stores && (
-                  <div>
-                    {game.stores.map((stores) => {
-                      return (
-                        <a
-                          href={`http://www.${stores.store.domain}`}
-                          target="_blank" rel="noreferrer"
-                        >
-                          <h5 key={stores.store.name}>
-                            <span
-                              key={stores.store.id}
-                              className="badge bg-secondary me-2"
-                            >
-                              {stores.store.name}
-                            </span>
-                          </h5>
-                        </a>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
+                        <div className="my-4">
+              <h6 className="card-title mb-1">Developers </h6>
+              {game.developers && (
+                <div>
+                  {game.developers.map((developer, index) => (
+                    <React.Fragment key={developer.name}>
+                      {index > 0 && <span>, </span>}
+                      <span className="badge bg-secondary me-1">{developer.name}</span>
+                    </React.Fragment>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
-
-          <div className="card col-md-8 m-2">
-            <div className="card-body">
-              <h5 className="card-title mb-1 mt-2">Description</h5>
-              <p className="card-text mb-4">{game.description_raw}</p>
-
-              <h5 className="card-title">Developers </h5>
-              <div className="card-text mb-4">
-                {game.developers && (
-                  <div>
-                    {game.developers.map((developers) => {
-                      return (
-                        <h5 key={developers.name}>
-                          <span className="badge bg-secondary">
-                            {developers.name}
-                          </span>
-                        </h5>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
+        </div>
       </div>
     </div>
   );

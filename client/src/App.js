@@ -4,6 +4,7 @@ import Mygames from "./pages/Mygames";
 import Gameprofile from "./pages/Gameprofile";
 import Searchresults from "./pages/Searchresults";
 import NavigationBar from "./components/NavigationBar";
+import Footer from "./components/Footer";
 
 function App() {
   
@@ -15,6 +16,7 @@ function App() {
         <Route path="mygames" element={<Mygames />}></Route>
         <Route path="gameprofile/:id" element={<Gameprofile />}></Route>
       </Routes>
+    <Footer />
     </div>
   );
 }
