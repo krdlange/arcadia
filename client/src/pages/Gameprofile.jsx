@@ -302,10 +302,7 @@ export default function Gameprofile() {
               {game.developers && (
                 <div>
                   {game.developers.map((developer, index) => (
-                    <React.Fragment key={developer.name}>
-                      {index > 0 && <span>, </span>}
                       <span className="badge bg-secondary me-1">{developer.name}</span>
-                    </React.Fragment>
                   ))}
                 </div>
               )}

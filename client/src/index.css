@@ -1,18 +1,28 @@
-body {
+/* body {
   margin: 0;
   font-family: 'Barlow', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
+} */
 
 /* code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 } */
 
-ul{
+/* ul{
   list-style: none;
   margin: 0;
+} */
+
+@import url("https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800&display=swap");
+
+html,
+body,
+#root,
+.app {
+  height: 100%;
+  width: 100%;
 }
 
- 
+

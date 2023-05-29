@@ -3,10 +3,10 @@ $font-family-sans-serif: 'Barlow', sans-serif;
 $theme-colors: (
   "primary":    rgb(0, 0, 0),
   "secondary":  rgb(0, 0, 0),
-  "success":     rgb(56, 104, 73),
+  "success":     rgb(97, 110, 94),
   "info":        rgb(87, 137, 199),
   "warning":     rgb(235, 204, 146),
-  "danger":      rgb(196, 105, 105),
+  "danger":      rgb(135, 56, 56),
   "light":       rgb(255, 255, 255),
   "dark":       rgb(0, 0, 0)
 );
@@ -36,5 +36,6 @@ $display-font-sizes: (
 );
 
 $display-font-weight: 800;
+$link-decoration:                         none;
 
 @import '~bootstrap/scss/bootstrap.scss';
