@@ -8,7 +8,7 @@ export default function Mygames() {
   const [myGames, setMyGames] = useState([]); //user's collection
   // const { id } = useParams(); //api id
 
-  //for modal
+  //modal
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = (id) => {
@@ -22,10 +22,10 @@ export default function Mygames() {
   // const [apiId, setApiId] = useState();
   const [gameId, setGameId] = useState();
 
-  //for status & rating
+  //status & rating
   const status = ["To play", "Currently Playing", "Done"];
   const ratings = ["Not Rated", "1", "2", "3", "4", "5"];
-  
+
   //input for edit
   const [input, setInput] = useState({
     // api_id: "",
@@ -77,7 +77,7 @@ export default function Mygames() {
     updateGame();
   };
 
-    //delete game from user's collection
+  //delete game from user's collection
   const deleteGame = async (id) => {
     // console.log(id);
     let confirmDelete = window.confirm("Delete game?");
@@ -95,68 +95,69 @@ export default function Mygames() {
   };
 
   return (
-    <div className="container">
-      <div className="mt-4">
-        <h1 className="mb-4 mt-4">My games</h1>
+    <div className="container mt-4">
+      <div className="row mb-4">
+        <h1 className="display-1">My games</h1>
+      </div>
 
-        {myGames && (
-          <div className="row">
-            {myGames.map((gameInfo, index) => (
-              <div className="col-md-4 mb-4">
+      {myGames && (
+        <div className="row">
+          {myGames.map((gameInfo, index) => (
+            <div className=" col-lg-4 col-md-4 col-sm-6 mb-4">
               <div className="card" key={index}>
+                <a
+                  href={`/gameprofile/${gameInfo.api_id}`}
+                  className="link-dark"
+                >
+                  <img
+                    alt={gameInfo.game_image}
+                    height="220"
+                    className="card-img-top rounded-2"
+                    src={gameInfo.game_image}
+                  />
+                </a>
+
                 <div className="card-body" key={index}>
-                  <a href={`/gameprofile/${gameInfo.api_id}`}>
-                    <img
-                      alt=""
-                      height="220"
-                      className="card-img-top mb-2"
-                      src={gameInfo.game_image}
-                    />
+                  <a
+                    href={`/gameprofile/${gameInfo.api_id}`}
+                    className="link-dark"
+                  >
                     <div className="card-title" key={index}>
-                      <h3>{gameInfo.game_name}</h3>
+                      <h2 className="display-2">{gameInfo.game_name}</h2>
                     </div>
                   </a>
-                  <div className="d-flex justify-content-between">
+
+                  <div className="d-flex justify-content-between align-items-end">
                     <div>
-                      <h4>
-                        <span className="badge bg-success me-1">
+                      <h6 className="fw-light my-0">
+                        <span className="badge bg-success">
                           My Rating: {ratings[`${gameInfo.my_rating}`]}
                         </span>
-                      </h4>
-                      <h4>
+                      </h6>
+                      <h6 className="fw-light my-0">
                         <span className="badge bg-success">
                           {status[`${gameInfo.status}`]}
                         </span>
-                      </h4>
+                      </h6>
                     </div>
+
                     <div>
                       <button
-                        className="btn btn-secondary btn-m me-2"
-                        onClick={() => {
-                          deleteGame(gameInfo.id);
-                        }}
-                      >
-                        Delete{" "}
-                        <i className="fa fa-trash" aria-hidden="true"></i>
-                      </button>
-
-                      <button
-                        className="btn btn-primary btn-m"
+                        className="btn btn-primary btn-sm"
                         onClick={() => {
                           handleShow(gameInfo.id);
                         }}
                       >
-                        Edit <i className="fa-solid fa-pen-to-square"></i>
+                        Edit<i className="fa-solid fa-pen-to-square ms-1"></i>
                       </button>
                     </div>
                   </div>
                 </div>
               </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+            </div>
+          ))}
+        </div>
+      )}
 
       {myGames && (
         <Modal show={show} onHide={handleClose}>
@@ -196,9 +197,14 @@ export default function Mygames() {
               </select>
             </p>
           </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
+          <Modal.Footer className="d-flex justify-content-between">
+            <Button
+              className="btn btn-danger"
+              onClick={() => {
+                deleteGame(setGameId);
+              }}
+            >
+              Remove from list
             </Button>
             <Button type="submit" variant="primary" onClick={handleSubmit}>
               Save Game
