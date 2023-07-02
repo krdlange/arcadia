@@ -20,7 +20,7 @@ function NavigationBar() {
             expand={expand}
           >
             <Container fluid>
-              <Navbar.Brand href="#"><h1 className="display-1">Arcadia</h1></Navbar.Brand>
+              <Navbar.Brand href="/"><h1 className="display-1">Arcadia</h1></Navbar.Brand>
               <Navbar.Toggle
                 aria-controls={`offcanvasNavbar-expand-${expand}`}
               />
