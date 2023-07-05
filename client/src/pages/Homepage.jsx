@@ -1,5 +1,4 @@
 import React from 'react'
-import Searchbar from '../components/Searchbar'
 import Mostpopulargames from '../components/Mostpopulargames'
 import Mostanticipated from '../components/Mostanticipated'
 export default function Homepage() {

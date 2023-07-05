@@ -14,7 +14,7 @@ export default function Mostpopulargames() {
 
       const searchGame = async () => {
         const response = await fetch(
-          `${BASE_URL}?key=${API_KEY}&dates=2023-01-01,2023-12-31&ordering=-added&page=1&page_size=8`
+          `${BASE_URL}?key=${API_KEY}&dates=2023-01-01,2023-12-31&ordering=-added&page=1&page_size=6`
         );
         const data = await response.json();
         setGames(data);
@@ -24,16 +24,16 @@ export default function Mostpopulargames() {
     return (
     <div> 
         <div>
-        <h3>Most Popular Games</h3>
+        <h3 className="mb-4">Most Popular Games</h3>
             </div>     
         {games.results && (
         <div className="row">
           {games.results.map((gameElement, index) => (
-            <div className="col-md-4 mb-4 text-center" key={gameElement.id}>
+            <div className="col-md-2 mb-4 text-center" key={gameElement.id}>
               <div className="card" key={index}>
                 <div className="card-body">
                   <img
-                    height="280"
+                    height="80"
                     key={index}
                     className="card-img-top"
                     src={gameElement.background_image}
