@@ -36,6 +36,9 @@ function NavigationBar() {
                 </Offcanvas.Header>
                 <Offcanvas.Body>
                   <Nav className="justify-content-end flex-grow-1 pe-3">
+                  <Nav.Link as={Link} to="/dashboard">
+                      <h5>Dashboard</h5>
+                    </Nav.Link>
                     <Nav.Link as={Link} to="/mygames">
                       <h5>My Games</h5>
                     </Nav.Link>
