@@ -1,32 +1,31 @@
-
-import React from 'react'
-import { useEffect, useState } from 'react';
-
+import React from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 const API_KEY = process.env.REACT_APP_API_KEY;
 const BASE_URL = "https://api.rawg.io/api/games";
 
 export default function Mostpopulargames() {
-    const [games, setGames] = useState({}); //API result
+  const [games, setGames] = useState({}); //API result
 
-    useEffect(() => {
-        searchGame();
-      }, []);
+  useEffect(() => {
+    searchGame();
+  }, []);
 
-      const searchGame = async () => {
-        const response = await fetch(
-          `${BASE_URL}?key=${API_KEY}&dates=2023-01-01,2023-12-31&ordering=-added&page=1&page_size=6`
-        );
-        const data = await response.json();
-        setGames(data);
-        console.log(data);
-      };
+  const searchGame = async () => {
+    const response = await fetch(
+      `${BASE_URL}?key=${API_KEY}&dates=2023-01-01,2023-12-31&ordering=-added&page=1&page_size=6`
+    );
+    const data = await response.json();
+    setGames(data);
+    console.log(data);
+  };
 
-    return (
-    <div> 
-        <div>
+  return (
+    <div>
+      <div>
         <h3 className="mb-4">Most Popular Games</h3>
-            </div>     
-        {games.results && (
+      </div>
+      {games.results && (
         <div className="row">
           {games.results.map((gameElement, index) => (
             <div className="col-md-2 mb-4 text-center" key={gameElement.id}>
@@ -41,9 +40,11 @@ export default function Mostpopulargames() {
                   />
                 </div>
 
-                <div className="card-title" key={index}>
-                  {gameElement.name}
-                </div>
+                <Link to={`/gameprofile/${gameElement.id}`}>
+                  <div className="card-title" key={index}>
+                    {gameElement.name}
+                  </div>
+                </Link>
 
                 <div className="d-flex mt-1 mb-2 justify-content-center">
                   <div className="mb-2 me-2">
@@ -102,6 +103,7 @@ export default function Mostpopulargames() {
             </div>
           ))}
         </div>
-      )}</div>
-  )
+      )}
+    </div>
+  );
 }
