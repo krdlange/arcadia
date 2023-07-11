@@ -1,7 +1,7 @@
 
 import React from 'react'
 import { useEffect, useState } from 'react';
-
+import { Link } from 'react-router-dom';
 const API_KEY = process.env.REACT_APP_API_KEY;
 const BASE_URL = "https://api.rawg.io/api/games";
 
@@ -41,9 +41,12 @@ export default function Mostanticipatedgames() {
                   />
                 </div>
 
+                <Link to={`/gameprofile/${gameElement.id}`}>
+
                 <div className="card-title" key={index}>
                   {gameElement.name}
                 </div>
+                </Link>
 
                 <div className="d-flex mt-1 mb-2 justify-content-center">
                   <div className="mb-2 me-2">
