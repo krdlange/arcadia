@@ -1,5 +1,5 @@
 import React from "react";
-
+import Carousel from "./Carousel";
 export default function Footer() {
   return (
     <footer className="bg-white mt-4">
@@ -8,6 +8,7 @@ export default function Footer() {
           <p>Full-stack Project by Kriska de Lange</p>
         </div>
       </div>
+      <Carousel></Carousel>
     </footer>
   );
 }
